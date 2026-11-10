@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kalshi Daily Parlays</title>
+
+  <!-- PWA -->
+  <link rel="manifest" href="/manifest.json" />
+  <meta name="theme-color" content="#059669" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Kalshi Parlays" />
+  <link rel="apple-touch-icon" href="/icon-192.png" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            kalshi: {
+              50: '#ecfdf5',
+              100: '#d1fae5',
+              400: '#34d399',
+              500: '#10b981',
+              600: '#059669',
+              700: '#047857',
+              900: '#064e3b',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+    .card { transition: transform 0.15s ease, box-shadow 0.15s ease; }
+    .card:hover { transform: translateY(-2px); }
+    .prob-bar { transition: width 0.6s ease; }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-900 dark:bg-gray-950 dark:text-gray-100 min-h-screen transition-colors duration-200">
+
+  <!-- Header -->
+  <header class="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 sticky top-0 z-20">
+    <div class="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-lg bg-kalshi-600 flex items-center justify-center text-white font-bold text-lg">K</div>
+        <div>
+          <h1 class="text-lg font-semibold leading-tight">Kalshi Daily Parlays</h1>
+          <p class="text-xs text-gray-500 dark:text-gray-400">Ranked by chance of winning</p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <!-- Dark mode toggle -->
+        <button id="themeToggle" onclick="toggleTheme()" title="Toggle dark mode"
+          class="p-2 rounded-lg text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800 transition">
+          <!-- Sun (shown in dark mode) -->
+          <svg id="icon-sun" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+          </svg>
+          <!-- Moon (shown in light mode) -->
+          <svg id="icon-moon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+          </svg>
+        </button>
+
+        <button id="refreshBtn" onclick="loadCombos(true)"
+          class="flex items-center gap-2 px-3 py-1.5 text-sm font-medium rounded-lg
+                 bg-kalshi-50 text-kalshi-700 hover:bg-kalshi-100
+                 dark:bg-kalshi-900/40 dark:text-kalshi-400 dark:hover:bg-kalshi-900/60 transition">
+          <svg id="refreshIcon" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+          </svg>
+          Refresh
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-5xl mx-auto px-4 py-6">
+
+    <!-- Status / Meta -->
+    <div id="meta" class="mb-6 text-sm text-gray-500 dark:text-gray-400 flex flex-wrap gap-x-4 gap-y-1">
+      <span>Loading…</span>
+    </div>
+
+    <!-- Tabs -->
+    <div class="flex gap-2 mb-6">
+      <button onclick="showTab('core')" id="tab-core"
+        class="tab-btn px-4 py-2 rounded-lg text-sm font-medium bg-kalshi-600 text-white">
+        Highest Chance <span id="coreCount" class="ml-1 opacity-80"></span>
+      </button>
+      <button onclick="showTab('upside')" id="tab-upside"
+        class="tab-btn px-4 py-2 rounded-lg text-sm font-medium
+               bg-gray-100 text-gray-700 hover:bg-gray-200
+               dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700">
+        Higher Upside (5–10x) <span id="upsideCount" class="ml-1 opacity-70"></span>
+      </button>
+    </div>
+
+    <!-- Loading State -->
+    <div id="loading" class="hidden py-20 text-center">
+      <div class="inline-block w-8 h-8 border-4 border-kalshi-200 dark:border-kalshi-900 border-t-kalshi-600 dark:border-t-kalshi-400 rounded-full animate-spin"></div>
+      <p class="mt-4 text-gray-500 dark:text-gray-400">Generating combos from live Kalshi markets…</p>
+      <p class="text-sm text-gray-400 dark:text-gray-500 mt-1">This usually takes 15–40 seconds</p>
+    </div>
+
+    <!-- Error State -->
+    <div id="error" class="hidden bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-900 rounded-xl p-6 text-center">
+      <p class="text-red-700 dark:text-red-400 font-medium">Could not load combos</p>
+      <p id="errorMsg" class="text-red-600 dark:text-red-500 text-sm mt-1"></p>
+      <button onclick="loadCombos(true)"
+        class="mt-4 px-4 py-2 bg-red-100 dark:bg-red-900/50 text-red-700 dark:text-red-300 rounded-lg text-sm font-medium hover:bg-red-200 dark:hover:bg-red-900/70">
+        Try Again
+      </button>
+    </div>
+
+    <!-- Core List -->
+    <div id="coreList" class="space-y-3"></div>
+
+    <!-- Upside List -->
+    <div id="upsideList" class="space-y-3 hidden"></div>
+
+    <!-- Empty State -->
+    <div id="empty" class="hidden py-16 text-center text-gray-500 dark:text-gray-400">
+      <p class="text-lg">No combos found right now</p>
+      <p class="text-sm mt-1 text-gray-400 dark:text-gray-500">Try refreshing later when more markets are open</p>
+    </div>
+
+  </main>
+
+  <footer class="max-w-5xl mx-auto px-4 py-8 text-center text-xs text-gray-400 dark:text-gray-600 border-t border-gray-100 dark:border-gray-800 mt-8">
+    Suggestions only · Prices and availability change · Always verify on Kalshi before trading
+  </footer>
+
+  <script>
+    const API_BASE = 'http://localhost:8000';
+
+    let currentTab = 'core';
+    let data = null;
+
+    // ---------- Theme ----------
+    function applyTheme(theme) {
+      const root = document.documentElement;
+      if (theme === 'dark') {
+        root.classList.add('dark');
+        document.getElementById('icon-sun').classList.remove('hidden');
+        document.getElementById('icon-moon').classList.add('hidden');
+      } else {
+        root.classList.remove('dark');
+        document.getElementById('icon-sun').classList.add('hidden');
+        document.getElementById('icon-moon').classList.remove('hidden');
+      }
+      localStorage.setItem('theme', theme);
+    }
+
+    function toggleTheme() {
+      const isDark = document.documentElement.classList.contains('dark');
+      applyTheme(isDark ? 'light' : 'dark');
+    }
+
+    // Init theme: saved → system preference → light
+    (function initTheme() {
+      const saved = localStorage.getItem('theme');
+      if (saved) {
+        applyTheme(saved);
+      } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        applyTheme('dark');
+      } else {
+        applyTheme('light');
+      }
+    })();
+
+    // ---------- Tabs ----------
+    function showTab(tab) {
+      currentTab = tab;
+      document.getElementById('coreList').classList.toggle('hidden', tab !== 'core');
+      document.getElementById('upsideList').classList.toggle('hidden', tab !== 'upside');
+
+      const active = 'tab-btn px-4 py-2 rounded-lg text-sm font-medium bg-kalshi-600 text-white';
+      const inactive = 'tab-btn px-4 py-2 rounded-lg text-sm font-medium bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700';
+
+      document.getElementById('tab-core').className = tab === 'core' ? active : inactive;
+      document.getElementById('tab-upside').className = tab === 'upside' ? active : inactive;
+    }
+
+    // ---------- Rendering ----------
+    function formatProb(p) {
+      return (p * 100).toFixed(1) + '%';
+    }
+
+    function formatPayout(x) {
+      return x.toFixed(2) + 'x';
+    }
+
+    function timeAgo(iso) {
+      if (!iso) return '';
+      const diff = (Date.now() - new Date(iso).getTime()) / 1000;
+      if (diff < 60) return 'just now';
+      if (diff < 3600) return Math.floor(diff / 60) + 'm ago';
+      return Math.floor(diff / 3600) + 'h ago';
+    }
+
+    function renderCombo(c, isUpside = false) {
+      const probPct = Math.min(100, c.estimated_prob * 100);
+      const barColor = isUpside ? 'bg-amber-500' : 'bg-kalshi-500';
+      const rankBg = isUpside
+        ? 'bg-amber-100 text-amber-700 dark:bg-amber-900/50 dark:text-amber-300'
+        : 'bg-kalshi-100 text-kalshi-700 dark:bg-kalshi-900/50 dark:text-kalshi-300';
+
+      const legsHtml = c.legs.map(leg => `
+        <div class="flex items-center justify-between py-1.5 border-b border-gray-100 dark:border-gray-700/60 last:border-0">
+          <span class="text-sm text-gray-700 dark:text-gray-300 truncate pr-3">${leg.title}</span>
+          <span class="text-sm font-medium text-gray-900 dark:text-gray-100 whitespace-nowrap">${(leg.mid_price * 100).toFixed(0)}¢</span>
+        </div>
+      `).join('');
+
+      return `
+        <div class="card bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-sm overflow-hidden">
+          <div class="p-4">
+            <div class="flex items-start justify-between gap-3 mb-3">
+              <div class="flex items-center gap-2">
+                <span class="inline-flex items-center justify-center w-7 h-7 rounded-full ${rankBg} text-xs font-bold">
+                  ${c.rank}
+                </span>
+                <div>
+                  <div class="font-semibold text-gray-900 dark:text-gray-100">${formatPayout(c.payout_multiple)}</div>
+                  <div class="text-xs text-gray-500 dark:text-gray-400">${c.num_legs} legs</div>
+                </div>
+              </div>
+              <div class="text-right">
+                <div class="text-sm font-medium text-gray-900 dark:text-gray-100">${formatProb(c.estimated_prob)}</div>
+                <div class="text-xs text-gray-500 dark:text-gray-400">est. win chance</div>
+              </div>
+            </div>
+
+            <div class="h-1.5 bg-gray-100 dark:bg-gray-800 rounded-full mb-4 overflow-hidden">
+              <div class="prob-bar h-full ${barColor} rounded-full" style="width: ${probPct}%"></div>
+            </div>
+
+            <div class="bg-gray-50 dark:bg-gray-800/60 rounded-lg px-3 py-1">
+              ${legsHtml}
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function render() {
+      if (!data) return;
+
+      const core = data.core || [];
+      const upside = data.upside || [];
+
+      document.getElementById('coreCount').textContent = core.length ? `(${core.length})` : '';
+      document.getElementById('upsideCount').textContent = upside.length ? `(${upside.length})` : '';
+
+      document.getElementById('meta').innerHTML = `
+        <span>Updated ${timeAgo(data.generated_at)}</span>
+        <span>·</span>
+        <span>${data.markets_scanned || 0} markets scanned</span>
+        <span>·</span>
+        <span>${data.candidates_generated || 0} candidates</span>
+      `;
+
+      const coreEl = document.getElementById('coreList');
+      const upsideEl = document.getElementById('upsideList');
+
+      if (core.length === 0 && upside.length === 0) {
+        document.getElementById('empty').classList.remove('hidden');
+        coreEl.innerHTML = '';
+        upsideEl.innerHTML = '';
+        return;
+      }
+
+      document.getElementById('empty').classList.add('hidden');
+      coreEl.innerHTML = core.map(c => renderCombo(c, false)).join('');
+      upsideEl.innerHTML = upside.map(c => renderCombo(c, true)).join('');
+    }
+
+    async function loadCombos(force = false) {
+      const loading = document.getElementById('loading');
+      const error = document.getElementById('error');
+      const refreshIcon = document.getElementById('refreshIcon');
+
+      loading.classList.remove('hidden');
+      error.classList.add('hidden');
+      document.getElementById('coreList').innerHTML = '';
+      document.getElementById('upsideList').innerHTML = '';
+      document.getElementById('empty').classList.add('hidden');
+
+      refreshIcon.classList.add('animate-spin');
+
+      try {
+        const url = `${API_BASE}/combos/today?core_count=18&upside_count=5${force ? '&force_refresh=true' : ''}`;
+        const res = await fetch(url);
+        if (!res.ok) throw new Error(`API error ${res.status}`);
+        data = await res.json();
+        render();
+        showTab(currentTab);
+      } catch (err) {
+        console.error(err);
+        document.getElementById('errorMsg').textContent = err.message + ' — Is the API running on port 8000?';
+        error.classList.remove('hidden');
+      } finally {
+        loading.classList.add('hidden');
+        refreshIcon.classList.remove('animate-spin');
+      }
+    }
+
+    // Register service worker for PWA
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js').catch(err => {
+        console.log('SW registration failed:', err);
+      });
+    }
+
+    // Initial load
+    loadCombos();
+  </script>
+</body>
+</html>

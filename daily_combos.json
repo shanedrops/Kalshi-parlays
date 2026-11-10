@@ -1,0 +1,244 @@
+{
+  "generated_at": "2026-11-10T21:16:04.587896+00:00",
+  "markets_scanned": 441,
+  "candidates": 10000,
+  "core": [
+    {
+      "rank": 1,
+      "payout": 2.02,
+      "prob": 0.4951,
+      "summary": "Phoenix wins (62%)  +  New York wins by over 5.5 points (80%)",
+      "tickers": [
+        "KXNBAGAME-26NOV10LACPHX-PHX",
+        "KXNBASPREAD-26NOV10MILNYK-NYK6"
+      ]
+    },
+    {
+      "rank": 2,
+      "payout": 2.02,
+      "prob": 0.4951,
+      "summary": "Colorado wins (62%)  +  New York wins by over 5.5 points (80%)",
+      "tickers": [
+        "KXNHLGAME-26NOV10COLTOR-COL",
+        "KXNBASPREAD-26NOV10MILNYK-NYK6"
+      ]
+    },
+    {
+      "rank": 3,
+      "payout": 2.02,
+      "prob": 0.4951,
+      "summary": "Houston wins (62%)  +  New York wins by over 5.5 points (80%)",
+      "tickers": [
+        "KXNBAGAME-26NOV11GSWHOU-HOU",
+        "KXNBASPREAD-26NOV10MILNYK-NYK6"
+      ]
+    },
+    {
+      "rank": 4,
+      "payout": 2.02,
+      "prob": 0.4945,
+      "summary": "Bowling Green wins (66%)  +  New York wins by over 7.5 points (76%)",
+      "tickers": [
+        "KXNCAAFGAME-26NOV10KENTBGSU-BGSU",
+        "KXNBASPREAD-26NOV10MILNYK-NYK8"
+      ]
+    },
+    {
+      "rank": 5,
+      "payout": 2.03,
+      "prob": 0.4923,
+      "summary": "New York wins (90%)  +  Full Game: Over 215.5 points scored (55%)",
+      "tickers": [
+        "KXNBAGAME-26NOV10MILNYK-NYK",
+        "KXNBATOTAL-26NOV10BOSPHI-216"
+      ]
+    },
+    {
+      "rank": 6,
+      "payout": 2.03,
+      "prob": 0.4923,
+      "summary": "Full Game: Over 215.5 points scored (55%)  +  San Antonio wins (90%)",
+      "tickers": [
+        "KXNBATOTAL-26NOV10BOSPHI-216",
+        "KXNBAGAME-26NOV11SASCHI-SAS"
+      ]
+    },
+    {
+      "rank": 7,
+      "payout": 2.03,
+      "prob": 0.4923,
+      "summary": "Full Game: Over 215.5 points scored (55%)  +  Central Michigan wins (90%)",
+      "tickers": [
+        "KXNBATOTAL-26NOV10BOSPHI-216",
+        "KXNCAAFGAME-26NOV11SACCMU-CMU"
+      ]
+    },
+    {
+      "rank": 8,
+      "payout": 2.03,
+      "prob": 0.4916,
+      "summary": "Western Michigan wins (86%)  +  St. Louis wins (57%)",
+      "tickers": [
+        "KXNCAAFGAME-26NOV10WMUAKR-WMU",
+        "KXNHLGAME-26NOV10DETSTL-STL"
+      ]
+    },
+    {
+      "rank": 9,
+      "payout": 2.03,
+      "prob": 0.4915,
+      "summary": "New Jersey wins (56%)  +  Los Angeles L wins (87%)",
+      "tickers": [
+        "KXNHLGAME-26NOV10NJWPG-NJ",
+        "KXNBAGAME-26NOV11LALMIL-LAL"
+      ]
+    },
+    {
+      "rank": 10,
+      "payout": 2.03,
+      "prob": 0.4915,
+      "summary": "Los Angeles L wins (87%)  +  Miami wins by over 7.5 points (56%)",
+      "tickers": [
+        "KXNBAGAME-26NOV11LALMIL-LAL",
+        "KXNBASPREAD-26NOV10MIAUTA-MIA8"
+      ]
+    },
+    {
+      "rank": 11,
+      "payout": 2.04,
+      "prob": 0.4911,
+      "summary": "Boston wins (61%)  +  New York wins by over 5.5 points (80%)",
+      "tickers": [
+        "KXNBAGAME-26NOV11BOSTOR-BOS",
+        "KXNBASPREAD-26NOV10MILNYK-NYK6"
+      ]
+    },
+    {
+      "rank": 12,
+      "payout": 2.05,
+      "prob": 0.4878,
+      "summary": "New York wins (90%)  +  Los Angeles wins (55%)",
+      "tickers": [
+        "KXNBAGAME-26NOV10MILNYK-NYK",
+        "KXNHLGAME-26NOV10NSHLA-LA"
+      ]
+    },
+    {
+      "rank": 13,
+      "payout": 2.05,
+      "prob": 0.4878,
+      "summary": "Los Angeles wins (55%)  +  San Antonio wins (90%)",
+      "tickers": [
+        "KXNHLGAME-26NOV10NSHLA-LA",
+        "KXNBAGAME-26NOV11SASCHI-SAS"
+      ]
+    },
+    {
+      "rank": 14,
+      "payout": 2.05,
+      "prob": 0.4878,
+      "summary": "Los Angeles wins (55%)  +  Central Michigan wins (90%)",
+      "tickers": [
+        "KXNHLGAME-26NOV10NSHLA-LA",
+        "KXNCAAFGAME-26NOV11SACCMU-CMU"
+      ]
+    },
+    {
+      "rank": 15,
+      "payout": 2.05,
+      "prob": 0.4872,
+      "summary": "Los Angeles L wins (87%)  +  Phoenix wins by over 2.5 points (56%)",
+      "tickers": [
+        "KXNBAGAME-26NOV11LALMIL-LAL",
+        "KXNBASPREAD-26NOV10LACPHX-PHX3"
+      ]
+    },
+    {
+      "rank": 16,
+      "payout": 2.05,
+      "prob": 0.487,
+      "summary": "Full Game: Over 211.5 points scored (64%)  +  New York wins by over 7.5 points (76%)",
+      "tickers": [
+        "KXNBATOTAL-26NOV10BOSPHI-212",
+        "KXNBASPREAD-26NOV10MILNYK-NYK8"
+      ]
+    },
+    {
+      "rank": 17,
+      "payout": 2.07,
+      "prob": 0.4833,
+      "summary": "New York wins (90%)  +  Full Game: Over 220.5 points scored (54%)",
+      "tickers": [
+        "KXNBAGAME-26NOV10MILNYK-NYK",
+        "KXNBATOTAL-26NOV10MILNYK-221"
+      ]
+    },
+    {
+      "rank": 18,
+      "payout": 2.07,
+      "prob": 0.4833,
+      "summary": "New York wins (90%)  +  Full Game: Over 224.5 points scored (54%)",
+      "tickers": [
+        "KXNBAGAME-26NOV10MILNYK-NYK",
+        "KXNBATOTAL-26NOV10OKCPOR-225"
+      ]
+    }
+  ],
+  "upside": [
+    {
+      "rank": 1,
+      "payout": 5.01,
+      "prob": 0.1995,
+      "summary": "Philadelphia wins (48%)  +  Oklahoma City wins (54%)  +  Miami wins (78%)",
+      "tickers": [
+        "KXNBAGAME-26NOV10BOSPHI-PHI",
+        "KXNBAGAME-26NOV10OKCPOR-OKC",
+        "KXNBAGAME-26NOV10MIAUTA-MIA"
+      ]
+    },
+    {
+      "rank": 2,
+      "payout": 5.17,
+      "prob": 0.1934,
+      "summary": "Philadelphia wins (48%)  +  New York wins (90%)  +  Nashville wins (46%)",
+      "tickers": [
+        "KXNBAGAME-26NOV10BOSPHI-PHI",
+        "KXNBAGAME-26NOV10MILNYK-NYK",
+        "KXNHLGAME-26NOV10NSHLA-NSH"
+      ]
+    },
+    {
+      "rank": 3,
+      "payout": 5.17,
+      "prob": 0.1934,
+      "summary": "Philadelphia wins (48%)  +  New York wins (90%)  +  Portland wins (46%)",
+      "tickers": [
+        "KXNBAGAME-26NOV10BOSPHI-PHI",
+        "KXNBAGAME-26NOV10MILNYK-NYK",
+        "KXNBAGAME-26NOV10OKCPOR-POR"
+      ]
+    },
+    {
+      "rank": 4,
+      "payout": 5.06,
+      "prob": 0.1977,
+      "summary": "Philadelphia wins (48%)  +  New York wins (90%)  +  Full Game: Over 224.5 points scored (46%)",
+      "tickers": [
+        "KXNBAGAME-26NOV10BOSPHI-PHI",
+        "KXNBAGAME-26NOV10MILNYK-NYK",
+        "KXNBATOTAL-26NOV10MILNYK-225"
+      ]
+    },
+    {
+      "rank": 5,
+      "payout": 5.07,
+      "prob": 0.1972,
+      "summary": "Philadelphia wins (48%)  +  Phoenix wins (62%)  +  Orlando wins (68%)",
+      "tickers": [
+        "KXNBAGAME-26NOV10BOSPHI-PHI",
+        "KXNBAGAME-26NOV10LACPHX-PHX",
+        "KXNBAGAME-26NOV10ORLSAC-ORL"
+      ]
+    }
+  ]
+}
